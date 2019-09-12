@@ -7,7 +7,8 @@
   "scripts": {
     "prestart": "./scripts/start-bs-local.sh",
     "start": ". ./scripts/setup-env-vars.sh && mocha",
-    "lint": "tslint -p ."
+    "lint": "tslint -p .",
+    "openshift:prepare": "ts-node scripts/prepare.ts"
   },
   "dependencies": {
     "@aerogear/app": "dev",
@@ -26,7 +27,9 @@
     "chai": "4.2.0",
     "express": "latest",
     "graphql": "latest",
+    "kubernetes-client": "^8.3.4",
     "mocha": "6.1.4",
+    "mustache": "^3.0.3",
     "node-fetch": "2.6.0",
     "pg": "7.11.0",
     "prettier": "1.18.2",
