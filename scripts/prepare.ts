@@ -29,8 +29,11 @@ const mobileClientCR = Mustache.render(mobileClientCRTemplate, { appName });
     'openshift-mobile-developer-console'
   ];
   while (true) {
+    mdcNamespace = namespaces.pop();
+    if (!mdcNamespace) {
+      throw new Error('Can not access MDC namespace');
+    }
     try {
-      const mdcNamespace = namespaces.pop();
       mobileClient = await client
         .apis['mdc.aerogear.org']
         .v1alpha1
@@ -38,9 +41,7 @@ const mobileClientCR = Mustache.render(mobileClientCRTemplate, { appName });
         .mobileclients
         .post({ body: JSON.parse(mobileClientCR) });
       break;
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (_) {}
   }
 
   const mobileClients = await client
@@ -62,4 +63,6 @@ const mobileClientCR = Mustache.render(mobileClientCRTemplate, { appName });
       .mobileclients(app)
       .delete();
   }
+
+  console.log(JSON.stringify(mobileClient, null, 2));
 })();
